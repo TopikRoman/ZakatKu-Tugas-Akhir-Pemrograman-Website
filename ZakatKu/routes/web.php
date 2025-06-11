@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [dashBoardAdmin::class, 'index'])->name('dashboard');
+    Route::get('admin/adminDashboard', [dashBoardAdmin::class, 'index'])->name('dashboard');
 });
 
 

@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         $roles = RolesUser::all();
-        return view('auth.register', compact('roles'));
+        return view('auth.register');
     }
 
     /**
