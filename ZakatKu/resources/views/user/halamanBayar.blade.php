@@ -30,8 +30,8 @@
     </div>
 
     <div class="mt-8 text-center">
-        <a href="#"
-           class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition duration-200">
+        <a href="{{ route('zakat.pilihMetode', ['id' => $riwayat->transaksiZakatId]) }}"
+            class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-lg transition duration-200">
             Bayar Sekarang
         </a>
     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\dashBoardAdmin;
 use App\Http\Controllers\admin\TransaksiZakatController;
 use App\Http\Controllers\admin\PembayaranZakatController;
 use App\Http\Controllers\user\RiwayatPembayaranZakat;
+use App\Http\Controllers\MetodeZakatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,4 +60,8 @@ route::middleware('auth')->group(function () {
     Route::get('/user/riwayat/bayar/{id}', [RiwayatPembayaranZakat::class, 'bayar'])->name('riwayat.bayar');
     Route::get('/user/riwayat/menunggu/{id}', [RiwayatPembayaranZakat::class, 'menunggu'])->name('riwayat.menunggu');
     Route::get('/user/riwayat/selesai/{id}', [RiwayatPembayaranZakat::class, 'selesai'])->name('riwayat.selesai');
+});
+
+route::middleware('auth')->group(function () {
+    Route::get('/zakat/pilih-metode/{id}', [MetodeZakatController::class, 'pilihMetode'])->name('zakat.pilihMetode');
 });
