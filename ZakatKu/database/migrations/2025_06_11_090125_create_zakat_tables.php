@@ -48,6 +48,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('metode_pembayaran', function (Blueprint $table) {
+            $table->id('metodePembayaranId');
+            $table->string('namaMetode'); // contoh: Tunai, Transfer, QRIS, dll
+            $table->timestamps();
+        });
+
         // Transaksi Zakat
         Schema::create('transaksi_zakat', function (Blueprint $table) {
             $table->id('transaksiZakatId');
@@ -113,5 +119,6 @@ return new class extends Migration
         Schema::dropIfExists('bentuk_zakat');
         Schema::dropIfExists('pembayaran_zakat');
         Schema::dropIfExists('penerima_zakat');
+        Schema::dropIfExists('metode_pembayaran');
     }
 };
