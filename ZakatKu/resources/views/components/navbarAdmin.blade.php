@@ -9,7 +9,6 @@
 
       <!-- Menu Desktop -->
       <div class="hidden md:flex items-center space-x-6">
-
         <!-- Dashboard -->
         <a href="{{ route('admin.dashboard') }}" class="text-green-800 hover:text-green-900 px-3 py-2 text-base font-semibold rounded-md transition-colors">
           Dashboard
@@ -37,8 +36,8 @@
             Data
           </button>
           <div class="absolute left-0 mt-2 w-56 bg-white border border-green-100 rounded-md shadow-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Akun Amil</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Akun Muzakki</a>
+            <a href="{{ route('amil.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Akun Amil</a>
+            <a href="{{ route('muzakki.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Akun Muzakki</a>
             <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Data Mustahik</a>
           </div>
         </div>
@@ -78,7 +77,7 @@
 
     <button onclick="toggleDropdown('mobile-pembayaran')" class="w-full text-left text-green-800 text-base font-semibold py-2">Pembayaran</button>
     <div id="mobile-pembayaran" class="hidden ml-4 space-y-1">
-      <a href="#" class="block text-gray-700 py-1">Pembayaran Zakat</a>
+      <a href="{{ route('admin.pembayaran.index') }}" class="block text-gray-700 py-1">Pembayaran Zakat</a>
       <a href="#" class="block text-gray-700 py-1">Verifikasi Pembayaran</a>
     </div>
 
@@ -86,8 +85,8 @@
 
     <button onclick="toggleDropdown('mobile-akun')" class="w-full text-left text-green-800 text-base font-semibold py-2">Data</button>
     <div id="mobile-akun" class="hidden ml-4 space-y-1">
-      <a href="#" class="block text-gray-700 py-1">Akun Amil</a>
-      <a href="#" class="block text-gray-700 py-1">Akun Muzakki</a>
+      <a href="{{ route('amil.index') }}" class="block text-gray-700 py-1">Akun Amil</a>
+      <a href="{{ route('muzakki.index') }}" class="block text-gray-700 py-1">Akun Muzakki</a>
       <a href="#" class="block text-gray-700 py-1">Data Mustahik</a>
     </div>
 

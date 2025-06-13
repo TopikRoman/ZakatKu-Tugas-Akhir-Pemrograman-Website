@@ -65,3 +65,11 @@ route::middleware('auth')->group(function () {
 route::middleware('auth')->group(function () {
     Route::get('/zakat/pilih-metode/{id}', [MetodeZakatController::class, 'pilihMetode'])->name('zakat.pilihMetode');
 });
+
+Route::middleware(['auth', 'isMuzakki'])->prefix('admin')->group(function () {
+    Route::resource('muzakki', App\Http\Controllers\admin\MuzakkiController::class);
+});
+
+Route::middleware(['auth', 'isAmil'])->prefix('admin')->group(function () {
+    Route::resource('amil', App\Http\Controllers\admin\AmilController::class);
+});
