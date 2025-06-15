@@ -10,7 +10,7 @@ class IsMuzakki
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->roleId == 1) {
+        if (Auth::check() && Auth::user()->roleId == 2) {
         return $next($request);
         }
 

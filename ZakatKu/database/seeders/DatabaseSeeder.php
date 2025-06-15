@@ -64,6 +64,7 @@ class DatabaseSeeder extends Seeder
             ['namaStatus' => 'Belum Dibayar'],
             ['namaStatus' => 'Sudah Dibayar'],
             ['namaStatus' => 'Menunggu Konfirmasi'],
+            ['namaStatus' => 'Dalam Proses'],
         ]);
 
         // Tahun berjalan dan sebelumnya
@@ -92,10 +93,12 @@ class DatabaseSeeder extends Seeder
         }
 
         DB::table('metode_pembayaran')->insert([
-            ['namaMetode' => 'Tunai'],
-            ['namaMetode' => 'Transfer Bank'],
-            ['namaMetode' => 'QRIS'],
-            ['namaMetode' => 'Dompet Digital'],
+            ['namaMetode' => 'TUNAI'],         // GOPAY
+            ['namaMetode' => 'BRIVA'],         // Bank BRI
+            ['namaMetode' => 'QRIS'],          // QRIS
+            ['namaMetode' => 'BNIVA'],         // Bank BNI
+            ['namaMetode' => 'GOPAY'],         // GOPAY
+            ['namaMetode' => 'SHOPEEPAY'],     // SHOPEEPAY
         ]);
     }
 }

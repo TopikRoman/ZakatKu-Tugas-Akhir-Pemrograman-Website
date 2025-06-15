@@ -3,10 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\dashBoardAdmin;
-use App\Http\Controllers\admin\TransaksiZakatController;
+use App\Http\Controllers\user\TransaksiZakatController;
 use App\Http\Controllers\admin\PembayaranZakatController;
 use App\Http\Controllers\user\RiwayatPembayaranZakat;
 use App\Http\Controllers\MetodeZakatController;
+use App\Http\Controllers\user\TripayAPI;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,7 @@ route::middleware('auth')->group(function () {
 
 route::middleware('auth')->group(function () {
     Route::get('/zakat/pilih-metode/{id}', [MetodeZakatController::class, 'pilihMetode'])->name('zakat.pilihMetode');
+    Route::post('/zakat/pilih-metode', [MetodeZakatController::class, 'metodeStore'])->name('zakat.simpanMetode');
 });
 
 Route::middleware(['auth', 'isMuzakki'])->prefix('admin')->group(function () {
@@ -73,3 +75,7 @@ Route::middleware(['auth', 'isMuzakki'])->prefix('admin')->group(function () {
 Route::middleware(['auth', 'isAmil'])->prefix('admin')->group(function () {
     Route::resource('amil', App\Http\Controllers\admin\AmilController::class);
 });
+
+// Route::middleware(['auth', 'isMuzakki'])->group(function () {
+//     Route::post('/tripay', [TripayAPI::class, 'tripay'])->name('pembayaranZakat.tripay');
+// });

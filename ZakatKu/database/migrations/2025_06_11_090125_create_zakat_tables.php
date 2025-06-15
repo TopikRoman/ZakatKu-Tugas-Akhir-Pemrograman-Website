@@ -52,13 +52,15 @@ return new class extends Migration
         Schema::create('transaksi_zakat', function (Blueprint $table) {
             $table->id('transaksiZakatId');
             $table->unsignedBigInteger('userId');
+            $table->string('atasNama');
             $table->unsignedBigInteger('pembayaranZakatId');
             $table->unsignedBigInteger('jenisId');
             $table->unsignedBigInteger('bentukId');
             $table->integer('jumlah');
-            $table->date('tanggalTransaksi');
+            $table->date('tanggalTransaksi')->nullable();
             $table->unsignedBigInteger('statusPembayaranId');
-            $table->unsignedBigInteger('metodePembayaranId');
+            $table->unsignedBigInteger('metodePembayaranId')->nullable();
+            $table->string('noReferensi')->nullable();
 
             // Foreign keys
             $table->foreign('userId')->references('id')->on('users');

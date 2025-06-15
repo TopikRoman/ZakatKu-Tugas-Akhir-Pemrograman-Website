@@ -26,7 +26,7 @@ class RiwayatPembayaranZakat extends Controller
         $statusId = $riwayat->statusPembayaranId;
 
         return match ($statusId) {
-            1 => redirect()->route('riwayat.bayar', $riwayat->transaksiZakatId),
+            4 => redirect()->route('riwayat.bayar', $riwayat->transaksiZakatId),
             2 => redirect()->route('riwayat.selesai', $riwayat->transaksiZakatId),
             3 => redirect()->route('riwayat.menunggu', $riwayat->transaksiZakatId),
             default => abort(404),

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -30,29 +30,36 @@ class TransaksiZakatController extends Controller
 
     public function store(Request $request)
     {
-        // try {
+        try {
             $request->validate([
+                'atasNama' => 'required|string|max:255',
                 'pembayaranZakatId' => 'required|exists:pembayaran_zakat,pembayaranZakatId',
                 'jenisId' => 'required|exists:jenis_zakat,jenisId',
                 'bentukId' => 'required|exists:bentuk_zakat,bentukId',
                 'jumlah' => 'required|numeric|min:0',
             ]);
 
-            TransaksiZakat::create([
+            $transaksi = TransaksiZakat::create([
                 'userId' => Auth::id(),
+                'atasNama' => $request->atasNama,
                 'pembayaranZakatId' => $request->pembayaranZakatId,
                 'jenisId' => $request->jenisId,
                 'bentukId' => $request->bentukId,
                 'jumlah' => $request->jumlah,
                 'tanggalTransaksi' => now(),
-                'statusPembayaranId' => 1,
+                'statusPembayaranId' => 4,
                 'metodePembayaranId' => null,
+                'noReferensi' => null,
             ]);
 
-            return redirect()->route('transaksi-zakat.index')->with('success', 'Transaksi zakat berhasil disimpan.');
-        // } catch (\Exception $e) {
-        //     return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $e->getMessage());
-        // }
+            if ($request->action === 'simpan') {
+                return redirect()->route('transaksi-zakat.index')->with('success', 'Transaksi berhasil disimpan.');
+            } elseif ($request->action === 'bayar') {
+                return redirect()->route('transaksi-zakat.bayar', $transaksi->transaksiZakatId);
+            }
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $e->getMessage());
+        }
     }
 
 }

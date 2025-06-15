@@ -15,19 +15,19 @@
     <h2 class="text-3xl font-bold text-green-800 mb-10 text-center border-b-2 border-green-300 pb-4">
         Pilih Metode Pembayaran Zakat Anda
     </h2>
-
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach ($metode as $item)
-            <form action="#" method="POST" enctype="multipart/form-data"
-                  class="bg-white border border-green-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl transition duration-300">
-                @csrf
-                <input type="hidden" name="metodePembayaranId" value="{{ $item['id'] }}">
+        <form action="{{ route('zakat.simpanMetode') }}" method="POST" enctype="multipart/form-data"
+        class="bg-white border border-green-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center hover:shadow-xl transition duration-300">
+        @csrf
+        <input type='hidden' name=' transaksiId' value='{{ $idTransaksi }}'>
+        <input type="hidden" name="metodePembayaranId" value="{{ $item['id'] }}">
 
-                <div class="w-32 h-32 mb-5 flex items-center justify-center bg-green-50 rounded-xl shadow-inner">
-                    <img src="{{ asset('storage/images/' . $item['gambar']) }}"
-                         alt="{{ $item['nama'] }}"
-                         class="object-contain w-full h-full p-2">
-                </div>
+        <div class="w-32 h-32 mb-5 flex items-center justify-center bg-green-50 rounded-xl shadow-inner">
+            <img src="{{ asset('storage/images/' . $item['gambar']) }}"
+            alt="{{ $item['nama'] }}"
+            class="object-contain w-full h-full p-2">
+        </div>
 
                 <p class="text-green-700 font-semibold text-lg mb-4 tracking-wide">
                     {{ $item['nama'] }}
