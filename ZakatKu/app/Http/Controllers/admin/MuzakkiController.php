@@ -52,26 +52,30 @@ class MuzakkiController extends Controller
 
     public function update(Request $request, User $muzakki)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|unique:users,username,' . $muzakki->id,
-            'email' => 'required|email|unique:users,email,' . $muzakki->id,
-            'alamat' => 'required|string',
-            'nomorTelepon' => 'required|string',
-            'password' => 'nullable|string|min:6',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'username' => 'required|string|unique:users,username,' . $muzakki->id,
+                'email' => 'required|email|unique:users,email,' . $muzakki->id,
+                'alamat' => 'required|string',
+                'nomorTelepon' => 'required|string',
+                'password' => 'nullable|string|min:6',
+            ]);
 
-        if ($request->filled('password')) {
-            $validated['password'] = Hash::make($request->password);
-        } else {
-            unset($validated['password']);
+            if ($request->filled('password')) {
+                $validated['password'] = Hash::make($request->password);
+            } else {
+                unset($validated['password']);
+            }
+
+            $validated['roleId'] = 2;
+
+            $muzakki->update($validated);
+
+            return redirect()->route('muzakki.index')->with('success', 'Muzakki berhasil diperbarui');
+        } catch (\Exception $e) {
+            return redirect()->route('muzakki.index')->with('error', 'Gagal memperbarui muzakki!');
         }
-
-        $validated['roleId'] = 2;
-
-        $muzakki->update($validated);
-
-        return redirect()->route('muzakki.index')->with('success', 'Muzakki berhasil diperbarui');
     }
 
     public function destroy(User $muzakki)
