@@ -13,8 +13,7 @@ use App\Models\StatusPembayaran;
 
 class TransaksiZakat extends Model
 {
-    use HasFactory;
-
+    public $timestamps = false;
     protected $table = 'transaksi_zakat';
     protected $primaryKey = 'transaksiZakatId';
     protected $fillable = [

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('roles_user', function (Blueprint $table) {
             $table->id('roleId'); // PRIMARY KEY, AUTO_INCREMENT
             $table->string('namaRoles'); // NOT NULL
-            $table->timestamps(); // Untuk created_at dan updated_at, opsional sesuai kebutuhan
         });
     }
 

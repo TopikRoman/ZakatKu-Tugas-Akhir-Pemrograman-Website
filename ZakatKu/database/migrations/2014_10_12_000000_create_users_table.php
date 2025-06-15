@@ -23,8 +23,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
-
             // Jika ada relasi ke tabel roles, bisa tambahkan foreign key:
             // $table->foreign('roleId')->references('id')->on('roles');
         });

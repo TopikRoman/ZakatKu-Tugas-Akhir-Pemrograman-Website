@@ -30,7 +30,7 @@ class TransaksiZakatController extends Controller
 
     public function store(Request $request)
     {
-        try {
+        // try {
             $request->validate([
                 'pembayaranZakatId' => 'required|exists:pembayaran_zakat,pembayaranZakatId',
                 'jenisId' => 'required|exists:jenis_zakat,jenisId',
@@ -44,15 +44,15 @@ class TransaksiZakatController extends Controller
                 'jenisId' => $request->jenisId,
                 'bentukId' => $request->bentukId,
                 'jumlah' => $request->jumlah,
-                'tanggalTransaksi' => $request->tanggalTransaksi ?? now(),
+                'tanggalTransaksi' => now(),
                 'statusPembayaranId' => 1,
-                'metodePembayaranId' => $request->metodePembayaranId ?? null,
+                'metodePembayaranId' => null,
             ]);
 
             return redirect()->route('transaksi-zakat.index')->with('success', 'Transaksi zakat berhasil disimpan.');
-        } catch (\Exception $e) {
-            return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $e->getMessage());
-        }
+        // } catch (\Exception $e) {
+        //     return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $e->getMessage());
+        // }
     }
 
 }

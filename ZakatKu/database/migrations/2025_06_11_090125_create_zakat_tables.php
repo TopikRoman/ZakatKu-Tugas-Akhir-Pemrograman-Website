@@ -17,41 +17,35 @@ return new class extends Migration
             $table->string('namaKepalaKeluarga');
             $table->string('alamat');
             $table->string('noTelepon');
-            $table->timestamps();
         });
 
         // Pembayaran Zakat
         Schema::create('pembayaran_zakat', function (Blueprint $table) {
             $table->id('pembayaranZakatId');
             $table->integer('tahun');
-            $table->timestamps();
         });
 
         // Bentuk Zakat
         Schema::create('bentuk_zakat', function (Blueprint $table) {
             $table->id('bentukId');
             $table->string('namaBentukZakat');
-            $table->timestamps();
         });
 
         // Jenis Zakat
         Schema::create('jenis_zakat', function (Blueprint $table) {
             $table->id('jenisId');
             $table->string('namaJenisZakat');
-            $table->timestamps();
         });
 
         // Status Pembayaran
         Schema::create('status_pembayaran', function (Blueprint $table) {
             $table->id('statusPembayaranId');
             $table->string('namaStatus');
-            $table->timestamps();
         });
 
         Schema::create('metode_pembayaran', function (Blueprint $table) {
             $table->id('metodePembayaranId');
             $table->string('namaMetode'); // contoh: Tunai, Transfer, QRIS, dll
-            $table->timestamps();
         });
 
         // Transaksi Zakat
@@ -65,7 +59,6 @@ return new class extends Migration
             $table->date('tanggalTransaksi');
             $table->unsignedBigInteger('statusPembayaranId');
             $table->unsignedBigInteger('metodePembayaranId');
-            $table->timestamps();
 
             // Foreign keys
             $table->foreign('userId')->references('id')->on('users');
@@ -79,14 +72,12 @@ return new class extends Migration
         Schema::create('pembagian_zakat', function (Blueprint $table) {
             $table->id('pembagianId');
             $table->integer('tahun');
-            $table->timestamps();
         });
 
         // Status Pembagian
         Schema::create('status_pembagian', function (Blueprint $table) {
             $table->id('statusId');
             $table->string('namaStatus');
-            $table->timestamps();
         });
 
         // Penyaluran Zakat
@@ -97,8 +88,6 @@ return new class extends Migration
             $table->unsignedBigInteger('statusId');
             $table->unsignedBigInteger('jenisId');
             $table->unsignedBigInteger('amilId');
-            $table->timestamps();
-
             // Foreign keys
             $table->foreign('penerimaId')->references('penerimaId')->on('penerima_zakat');
             $table->foreign('pembagianId')->references('pembagianId')->on('pembagian_zakat');
