@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -82,34 +83,39 @@ public function updateStatus(Request $request, $id)
     return redirect()->route('admin.zakat.editStatus', $id)->with('success', 'Status pembayaran berhasil diperbarui.');
 }
 
+
 public function exportPdf($tahun)
 {
-    // Ambil ID dari tabel pembayaran_zakat berdasarkan tahun
     $pembayaranZakat = PembayaranZakat::where('tahun', $tahun)->first();
 
     if (!$pembayaranZakat) {
         return redirect()->back()->with('error', 'Data pembayaran untuk tahun tersebut tidak ditemukan.');
     }
 
-    // Ambil semua transaksi berdasarkan pembayaranZakatId dan relasi lainnya
+    // Filter hanya transaksi dengan statusPembayaranId = 2
     $transaksis = TransaksiZakat::with(['user', 'jenis', 'statusPembayaran', 'bentuk'])
         ->where('pembayaranZakatId', $pembayaranZakat->pembayaranZakatId)
+        ->where('statusPembayaranId', 2)
         ->get();
 
     if ($transaksis->isEmpty()) {
-        return redirect()->back()->with('error', 'Tidak ada transaksi untuk tahun tersebut.');
+        return redirect()->back()->with('error', 'Tidak ada transaksi dengan status "terverifikasi" untuk tahun tersebut.');
     }
 
-    // Kirim ke view PDF
+    // Total berdasarkan bentuk zakat
+    $totalPerBentuk = $transaksis->groupBy(function ($item) {
+        return strtolower($item->bentuk->namaBentukZakat ?? 'lainnya');
+    })->map(function ($group) {
+        return $group->sum('jumlah');
+    });
+
     $pdf = Pdf::loadView('admin.templatePDF.template', [
         'transaksis' => $transaksis,
-        'tahun' => $tahun
+        'tahun' => $tahun,
+        'totalPerBentuk' => $totalPerBentuk
     ])->setPaper('A4', 'portrait');
 
     return $pdf->download("transaksi-zakat-$tahun.pdf");
 }
-
-
-
 
 }

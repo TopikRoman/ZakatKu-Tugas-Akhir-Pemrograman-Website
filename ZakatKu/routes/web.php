@@ -4,10 +4,14 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\dashBoardAdmin;
 use App\Http\Controllers\user\TransaksiZakatController;
+use App\Http\Controllers\admin\AdminTransaksiZakatController;
 use App\Http\Controllers\admin\PembayaranZakatController;
 use App\Http\Controllers\user\RiwayatPembayaranZakat;
 use App\Http\Controllers\MetodeZakatController;
 use App\Http\Controllers\user\TripayAPI;
+use App\Http\Controllers\admin\PembagianZakatController;
+use App\Http\Controllers\admin\AdminPenyaluranZakatController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -84,8 +88,20 @@ Route::middleware(['auth', 'isAmil'])->prefix('admin')->group(function () {
     Route::resource('amil', App\Http\Controllers\admin\AmilController::class);
 });
 
+route::middleware('auth')->group(function () {
+    Route::get('/transaksi/create', [AdminTransaksiZakatController::class, 'create'])->name('transaksi.create');
+    Route::post('/transaksi/store', [AdminTransaksiZakatController::class, 'store'])->name('transaksi.store');
+});
 
-
+route::middleware('auth')->group(function () {
+    Route::get('/pembagian', [PembagianZakatController::class, 'index'])->name('pembagian.index');
+    Route::post('/pembagian/tambah-tahun-ini', [PembagianZakatController::class, 'tambahTahunIni'])->name('tambahTahunIni');
+    Route::get('/pembagian/tahun/{id}', [PembagianZakatController::class, 'showYear'])->name('admin.pembagianZakat.show');
+});
+route::middleware('auth')->group(function () {
+    Route::get('/penyaluran/create', [AdminPenyaluranZakatController::class, 'createForm'])->name('penyaluran.create');
+    Route::post('/penyaluran/tambah', [AdminPenyaluranZakatController::class, 'store'])->name('penyaluran.store');
+});
 // Route::middleware(['auth', 'isMuzakki'])->group(function () {
 //     Route::post('/tripay', [TripayAPI::class, 'tripay'])->name('pembayaranZakat.tripay');
 // });

@@ -6,8 +6,16 @@
         <h1 class="text-3xl font-bold text-green-800 border-b-2 border-green-300 pb-2">
             Transaksi Zakat Tahun {{ $tahun->tahun }}
         </h1>
-        <a href="#" class="text-green-600 hover:underline">
-            <i class="fas fa-arrow-left"></i> Kembali
+        <a href="{{ route('transaksi.create') }}"
+           class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded shadow">
+            <i class="fas fa-plus mr-2"></i> Tambah Data
+        </a>
+    </div>
+
+    <div class="mb-6">
+        <a href="{{ route('admin.zakat.exportPdf', ['tahun' => $tahun->tahun]) }}"
+           class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded shadow">
+            <i class="fas fa-file-pdf mr-2"></i> Unduh PDF
         </a>
     </div>
 
@@ -25,36 +33,50 @@
                         default => 'bg-gray-100 text-gray-700',
                     };
                 @endphp
-                <div class="bg-white shadow-md rounded-lg p-4 flex flex-col md:flex-row justify-between items-start md:items-center">
-                    <div class="space-y-1">
-                        <p class="text-lg text-gray-800 font-semibold">
-                            {{ $trx->user->name }} — {{ $trx->jenis->nama ?? 'Zakat' }}
-                        </p>
+                    <div class="bg-white shadow-md rounded-lg p-4 flex flex-col md:flex-row justify-between items-start md:items-center">
+                        <div class="space-y-1">
+                            <p class="text-lg text-gray-800 font-semibold">
+                                {{ $trx->user->name }} — {{ $trx->jenis->namaJenisZakat ?? 'Zakat' }} ({{ $trx->bentuk->namaBentukZakat ?? '-' }})
+                            </p>
+                        @php
+                            $bentuk = strtolower($trx->bentuk->namaBentukZakat ?? '');
+                            $jumlahFormatted = '';
+
+                            switch ($bentuk) {
+                                case 'uang':
+                                    $jumlahFormatted = 'Rp ' . number_format($trx->jumlah, 0, ',', '.');
+                                    break;
+                                case 'emas':
+                                    $jumlahFormatted = number_format($trx->jumlah, 2, ',', '.') . ' gr';
+                                    break;
+                                case 'beras':
+                                    $jumlahFormatted = number_format($trx->jumlah, 2, ',', '.') . ' kg';
+                                    break;
+                                default:
+                                    $jumlahFormatted = number_format($trx->jumlah, 0, ',', '.');
+                                    break;
+                            }
+                        @endphp
+
                         <p class="text-sm text-gray-600">
-                            {{ \Carbon\Carbon::parse($trx->tanggalTransaksi)->format('d M Y') }} • Rp {{ number_format($trx->jumlah, 0, ',', '.') }}
+                            {{ \Carbon\Carbon::parse($trx->tanggalTransaksi)->format('d M Y') }} • {{ $jumlahFormatted }}
                         </p>
+                        </div>
+                        <div class="flex items-center space-x-4 mt-4 md:mt-0">
+                            <span class="px-3 py-1 rounded-full text-sm font-semibold {{ $statusClass }}">
+                                {{ $trx->statusPembayaran->namaStatus ?? 'Pending' }}
+                            </span>
+                            <button onclick='showModal(@json($trx))' class="text-green-600 hover:text-green-800">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
-                    <div class="flex items-center space-x-4 mt-4 md:mt-0">
-                        <span class="px-3 py-1 rounded-full text-sm font-semibold {{ $statusClass }}">
-                            {{ $trx->statusPembayaran->namaStatus ?? 'Pending' }}
-                        </span>
-                        <button onclick='showModal(@json($trx))' class="text-green-600 hover:text-green-800">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
             @endforeach
         </div>
     @endif
 </div>
 
-<!-- Modal -->
-<!-- Modal -->
-<a href="{{ route('admin.zakat.exportPdf', ['tahun' => $tahun->tahun]) }}"
-   class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded shadow">
-    <i class="fas fa-file-pdf mr-2"></i> Unduh PDF
-</a>
-
+<!-- Modal Detail -->
 <div id="detailModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 overflow-y-auto">
     <div class="bg-white rounded-lg shadow-lg max-w-2xl mx-auto mt-20 p-6 relative">
         <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
@@ -72,11 +94,25 @@
             day: 'numeric', month: 'long', year: 'numeric'
         });
 
+        let satuan = '';
+        const bentuk = data.bentuk?.namaBentukZakat?.toLowerCase();
+
+        if (bentuk === 'uang') {
+            satuan = 'Rp ' + Number(data.jumlah).toLocaleString('id-ID');
+        } else if (bentuk === 'emas') {
+            satuan = Number(data.jumlah).toLocaleString('id-ID') + ' gram';
+        } else if (bentuk === 'beras') {
+            satuan = Number(data.jumlah).toLocaleString('id-ID') + ' kg';
+        } else {
+            satuan = Number(data.jumlah).toLocaleString('id-ID'); // fallback tanpa satuan
+        }
+
         content.innerHTML = `
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                 <div><span class="font-semibold text-gray-800">Nama Pengguna:</span><br>${data.user?.name ?? '-'}</div>
-                <div><span class="font-semibold text-gray-800">Jenis Zakat:</span><br>${data.jenis?.nama ?? '-'}</div>
-                <div><span class="font-semibold text-gray-800">Jumlah:</span><br>Rp ${Number(data.jumlah).toLocaleString('id-ID')}</div>
+                <div><span class="font-semibold text-gray-800">Jenis Zakat:</span><br>${data.jenis?.namaJenisZakat ?? '-'}</div>
+                <div><span class="font-semibold text-gray-800">Bentuk Zakat:</span><br>${data.bentuk?.namaBentukZakat ?? '-'}</div>
+                <div><span class="font-semibold text-gray-800">Jumlah:</span><br>${satuan}</div>
                 <div><span class="font-semibold text-gray-800">Tanggal:</span><br>${formattedDate}</div>
                 <div><span class="font-semibold text-gray-800">Atas Nama:</span><br>${data.atasNama}</div>
                 <div><span class="font-semibold text-gray-800">Status Pembayaran:</span><br>${data.statusPembayaran?.namaStatus ?? '-'}</div>
@@ -97,5 +133,4 @@
         document.getElementById('detailModal').classList.add('hidden');
     }
 </script>
-
 @endsection

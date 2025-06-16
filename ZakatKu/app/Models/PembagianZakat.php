@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PembagianZakat extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     protected $table = 'pembagian_zakat';
     protected $primaryKey = 'pembagianId';
     protected $fillable = ['tahun'];

@@ -15,6 +15,7 @@ class PenyaluranZakat extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $table = 'penyaluran_zakat';
     protected $primaryKey = 'penyaluranId';
     protected $fillable = [

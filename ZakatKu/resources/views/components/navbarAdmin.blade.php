@@ -26,7 +26,7 @@
         </div>
 
         <!-- Penyaluran -->
-        <a href="#" class="text-green-800 hover:text-green-900 px-3 py-2 text-base font-semibold rounded-md transition-colors">
+        <a href="{{route('pembagian.index')}}" class="text-green-800 hover:text-green-900 px-3 py-2 text-base font-semibold rounded-md transition-colors">
           Penyaluran
         </a>
 
@@ -81,7 +81,7 @@
       <a href="#" class="block text-gray-700 py-1">Verifikasi Pembayaran</a>
     </div>
 
-    <a href="#" class="block text-green-800 text-base font-semibold py-2">Penyaluran</a>
+    <a href="{{route('pembagian.index')}}" class="block text-green-800 text-base font-semibold py-2">Penyaluran</a>
 
     <button onclick="toggleDropdown('mobile-akun')" class="w-full text-left text-green-800 text-base font-semibold py-2">Data</button>
     <div id="mobile-akun" class="hidden ml-4 space-y-1">

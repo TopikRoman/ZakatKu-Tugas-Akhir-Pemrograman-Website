@@ -27,18 +27,59 @@
         </thead>
         <tbody>
             @foreach($transaksis as $i => $trx)
-            <tr>
-                <td>{{ $i + 1 }}</td>
-                <td>{{ $trx->user->name ?? '-' }}</td>
-                <td>{{ $trx->jenis->namaJenisZakat ?? '-' }}</td>
-                <td>{{ $trx->bentuk->namaBentukZakat ?? '-' }}</td>
-                <td>Rp {{ number_format($trx->jumlah, 0, ',', '.') }}</td>
-                <td>{{ \Carbon\Carbon::parse($trx->tanggalTransaksi)->format('d-m-Y') }}</td>
-                <td>{{ $trx->atasNama ?? '-' }}</td>
-                <td>{{ $trx->statusPembayaran->namaStatus ?? '-' }}</td>
-            </tr>
+                @php
+                    $bentuk = strtolower($trx->bentuk->namaBentukZakat ?? '');
+                    $jumlahFormatted = match($bentuk) {
+                        'uang' => 'Rp ' . number_format($trx->jumlah, 0, ',', '.'),
+                        'emas' => number_format($trx->jumlah, 2, ',', '.') . ' gr',
+                        'beras' => number_format($trx->jumlah, 2, ',', '.') . ' kg',
+                        default => number_format($trx->jumlah, 2, ',', '.')
+                    };
+                @endphp
+                <tr>
+                    <td>{{ $i + 1 }}</td>
+                    <td>{{ $trx->user->name ?? '-' }}</td>
+                    <td>{{ $trx->jenis->namaJenisZakat ?? '-' }}</td>
+                    <td>{{ $trx->bentuk->namaBentukZakat ?? '-' }}</td>
+                    <td>{{ $jumlahFormatted }}</td>
+                    <td>{{ \Carbon\Carbon::parse($trx->tanggalTransaksi)->format('d-m-Y') }}</td>
+                    <td>{{ $trx->atasNama ?? '-' }}</td>
+                    <td>{{ $trx->statusPembayaran->namaStatus ?? '-' }}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>
+
+    {{-- Tabel Rekap Total --}}
+    @if(isset($totalPerBentuk) && count($totalPerBentuk))
+        <br><br>
+        <h4>Rekap Jumlah Zakat per Bentuk</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Bentuk Zakat</th>
+                    <th>Total Jumlah</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($totalPerBentuk as $bentuk => $total)
+                    <tr>
+                        <td>{{ ucfirst($bentuk) }}</td>
+                        <td>
+                            @if($bentuk === 'uang')
+                                Rp {{ number_format($total, 0, ',', '.') }}
+                            @elseif($bentuk === 'emas')
+                                {{ number_format($total, 2, ',', '.') }} gr
+                            @elseif($bentuk === 'beras')
+                                {{ number_format($total, 2, ',', '.') }} kg
+                            @else
+                                {{ number_format($total, 2, ',', '.') }}
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 </body>
 </html>
