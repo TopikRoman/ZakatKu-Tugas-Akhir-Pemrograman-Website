@@ -2,22 +2,25 @@
 
 @section('content')
 <div class="container mx-auto mt-10">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-green-800 border-b-2 border-green-300 pb-2">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
+        <h1 class="text-2xl sm:text-3xl font-bold text-green-800 border-b-2 border-green-300 pb-2">
             Transaksi Zakat Tahun {{ $tahun->tahun }}
         </h1>
-        <a href="{{ route('transaksi.create') }}"
-           class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded shadow">
-            <i class="fas fa-plus mr-2"></i> Tambah Data
-        </a>
+
+        <div class="flex flex-col sm:flex-row gap-2">
+            <a href="{{ route('transaksi.create') }}"
+            class="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded shadow transition">
+                <i class="fas fa-plus mr-2"></i> Tambah Data
+            </a>
+
+            <a href="{{ route('admin.zakat.exportPdf', ['tahun' => $tahun->tahun]) }}"
+            class="inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded shadow transition">
+                <i class="fas fa-file-pdf mr-2"></i> Unduh PDF
+            </a>
+        </div>
     </div>
 
-    <div class="mb-6">
-        <a href="{{ route('admin.zakat.exportPdf', ['tahun' => $tahun->tahun]) }}"
-           class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded shadow">
-            <i class="fas fa-file-pdf mr-2"></i> Unduh PDF
-        </a>
-    </div>
+
 
     @if($transaksis->isEmpty())
         <p class="text-gray-500 mt-10">Belum ada transaksi untuk tahun ini.</p>

@@ -5,7 +5,7 @@
     <div class="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-lg">
         <!-- Logo -->
         <div class="text-center">
-            <img src="{{ asset('storage/images/logo-zakat.png') }}" alt="Logo Zakat" class="h-20 mx-auto">
+            <img src="\images\logo-zakat.png" alt="Logo Zakat" class="h-20 mx-auto">
             <h2 class="mt-4 text-2xl font-bold text-green-700">Masuk ke Zakatku</h2>
         </div>
 

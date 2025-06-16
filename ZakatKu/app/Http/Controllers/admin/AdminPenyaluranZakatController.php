@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class AdminPenyaluranZakatController extends Controller
@@ -48,5 +49,25 @@ class AdminPenyaluranZakatController extends Controller
         ]);
 
         return redirect()->route('pembagian.index')->with('success', 'Data penyaluran berhasil ditambahkan.');
+    }
+
+    public function exportPdf($tahun)
+    {
+        $penyalurans = PenyaluranZakat::with(['penerima', 'jenis', 'status', 'amil'])
+            ->whereHas('pembagian', function ($query) use ($tahun) {
+                $query->where('tahun', $tahun);
+            })
+            ->get();
+
+        if ($penyalurans->isEmpty()) {
+            return redirect()->back()->with('error', 'Tidak ada data penyaluran untuk tahun tersebut.');
+        }
+
+        $pdf = Pdf::loadView('admin.templatePDF.templatePenyaluran', [
+            'penyalurans' => $penyalurans,
+            'tahun' => $tahun
+        ])->setPaper('A4', 'portrait');
+
+        return $pdf->download("penyaluran-zakat-$tahun.pdf");
     }
 }

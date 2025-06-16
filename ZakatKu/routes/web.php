@@ -25,7 +25,18 @@ use App\Http\Controllers\admin\AdminPenyaluranZakatController;
 */
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return Auth::user()->roleId == 1
+            ? redirect('admin/adminDashboard')
+            : redirect('/dashboard');
+    }
+
+    // Jika belum login (guest), tampilkan halaman welcome atau guestIndex
+    // Jika ingin tampilkan welcome.blade.php:
     return view('welcome');
+
+    // Atau jika ingin menggunakan controller khusus untuk guest
+    // return app(UserDashboardController::class)->guestIndex();
 });
 
 Route::get('/dashboard', function () {
@@ -101,6 +112,8 @@ route::middleware('auth')->group(function () {
 route::middleware('auth')->group(function () {
     Route::get('/penyaluran/create', [AdminPenyaluranZakatController::class, 'createForm'])->name('penyaluran.create');
     Route::post('/penyaluran/tambah', [AdminPenyaluranZakatController::class, 'store'])->name('penyaluran.store');
+    Route::get('/penyaluran/export-pdf/{tahun}', [AdminPenyaluranZakatController::class, 'exportPdf'])->name('admin.penyaluran.exportPdf');
+
 });
 // Route::middleware(['auth', 'isMuzakki'])->group(function () {
 //     Route::post('/tripay', [TripayAPI::class, 'tripay'])->name('pembayaranZakat.tripay');

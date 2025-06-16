@@ -6,11 +6,19 @@
         <h1 class="text-3xl font-bold text-green-800 border-b-2 border-green-300 pb-2">
             Pembagian Zakat Tahun {{ $tahun->tahun }}
         </h1>
-        <a href="{{ route('penyaluran.create') }}"
-           class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded shadow">
-            <i class="fas fa-plus mr-2"></i> Tambah Data
-        </a>
+        <div class="flex gap-4">
+            <a href="{{ route('penyaluran.create') }}"
+            class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2 rounded shadow">
+                <i class="fas fa-plus mr-2"></i> Tambah Data
+            </a>
+
+            <a href="{{ route('admin.penyaluran.exportPdf', ['tahun' => $tahun->tahun]) }}"
+            class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded shadow">
+                <i class="fas fa-file-pdf mr-2"></i> Unduh PDF
+            </a>
+        </div>
     </div>
+
 
     @if($penyalurans->isEmpty())
         <p class="text-gray-500 mt-10">Belum ada data pembagian untuk tahun ini.</p>

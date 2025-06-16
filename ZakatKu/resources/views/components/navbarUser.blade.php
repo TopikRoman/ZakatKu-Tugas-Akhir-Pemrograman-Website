@@ -27,8 +27,10 @@
         </div>
 
         <!-- Laporan -->
-        <a href="#" class="text-green-800 hover:text-green-900 px-3 py-2 text-base font-semibold rounded-md transition-colors">Laporan</a>
-
+        <a href="{{ route('admin.penyaluran.exportPdf', ['tahun' => now()->year]) }}"
+        class="text-green-800 hover:text-green-900 px-3 py-2 text-base font-semibold rounded-md transition-colors">
+            Laporan
+        </a>
         <!-- Dropdown Profil -->
         <div class="relative group">
           <button class="text-green-800 hover:text-green-900 px-3 py-2 text-base font-semibold rounded-md flex items-center transition-colors">
