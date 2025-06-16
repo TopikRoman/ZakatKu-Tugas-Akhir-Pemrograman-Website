@@ -61,6 +61,7 @@ return new class extends Migration
             $table->unsignedBigInteger('statusPembayaranId');
             $table->unsignedBigInteger('metodePembayaranId')->nullable();
             $table->string('noReferensi')->nullable();
+            $table->string('image')->nullable();
 
             // Foreign keys
             $table->foreign('userId')->references('id')->on('users');

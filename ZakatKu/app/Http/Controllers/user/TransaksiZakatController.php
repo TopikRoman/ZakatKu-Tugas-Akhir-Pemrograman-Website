@@ -14,6 +14,8 @@ use App\Models\StatusPembayaran;
 use App\Models\MetodePembayaran;
 use App\Models\TransaksiZakat;
 
+use Illuminate\Support\Facades\Storage;
+
 class TransaksiZakatController extends Controller
 {
     public function index()
@@ -61,5 +63,37 @@ class TransaksiZakatController extends Controller
             return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $e->getMessage());
         }
     }
+
+    public function uploadBukti(Request $request)
+    {
+        $request->validate([
+            'bukti' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'reference' => 'required|string'
+        ]);
+
+        try {
+            $file = $request->file('bukti');
+            $filename = 'bukti_' . time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('bukti', $filename, 'public');
+
+            $transaksi = TransaksiZakat::where('noReferensi', $request->reference)->first();
+
+            if (!$transaksi) {
+                return back()->with('error', 'Transaksi tidak ditemukan.');
+            }
+
+            // Simpan path gambar dan ubah status pembayaran jadi 3
+            $transaksi->image = $path;
+            $transaksi->statusPembayaranId = 3;
+            $transaksi->save();
+
+            return redirect()->route('user.riwayat')->with('success', 'Bukti pembayaran berhasil diunggah.');
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+
 
 }

@@ -72,11 +72,11 @@ class TripayAPI extends Controller
         ]);
 
         $response = curl_exec($curl);
-
-        if (isset($response->success) && $response->success && isset($response->data->reference)) {
+        $responsi = json_decode($response);
+        if (isset($responsi->success) && $responsi->success && isset($responsi->data->reference)) {
             $transaksi->update([
                 'metodePembayaranId' => $request->metodePembayaranId,
-                'noReferensi' => $response->data->reference,
+                'noReferensi' => $responsi->data->reference,
                 'statusPembayaranId' => 1,
             ]);
         }

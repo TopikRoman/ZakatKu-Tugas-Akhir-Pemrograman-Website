@@ -43,11 +43,18 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/transaksi-zakat/index', [TransaksiZakatController::class, 'index'])->name('transaksi-zakat.index');
     Route::post('/transaksi-zakat/store', [TransaksiZakatController::class, 'store'])->name('transaksi-zakat.store');
+    Route::post('/zakat/upload-bukti', [TransaksiZakatController::class, 'uploadBukti'])->name('upload.bukti');
+
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin/pembayaran', [PembayaranZakatController::class, 'index'])->name('admin.pembayaran.index');
     Route::post('/admin/pembayaran', [PembayaranZakatController ::class, 'tambahTahunIni'])->name('admin.pembayaran.tambahTahunIni');
+    Route::get('/admin/zakat/edit-status/{id}', [PembayaranZakatController::class, 'editStatus'])->name('admin.zakat.editStatus');
+    Route::put('/admin/zakat/update-status/{id}', [PembayaranZakatController::class, 'updateStatus'])->name('admin.zakat.updateStatus');
+    Route::get('/admin/zakat/menunggu-verifikasi', [PembayaranZakatController::class, 'listMenungguVerifikasi'])->name('admin.zakat.verifikasiList');
+
+
 
 });
 
@@ -76,6 +83,8 @@ Route::middleware(['auth', 'isMuzakki'])->prefix('admin')->group(function () {
 Route::middleware(['auth', 'isAmil'])->prefix('admin')->group(function () {
     Route::resource('amil', App\Http\Controllers\admin\AmilController::class);
 });
+
+
 
 // Route::middleware(['auth', 'isMuzakki'])->group(function () {
 //     Route::post('/tripay', [TripayAPI::class, 'tripay'])->name('pembayaranZakat.tripay');

@@ -21,7 +21,7 @@
           </button>
           <div class="absolute left-0 mt-2 w-56 bg-white border border-green-100 rounded-md shadow-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
             <a href="{{ route('admin.pembayaran.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Pembayaran Zakat</a>
-            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Verifikasi Pembayaran</a>
+            <a href="{{ route('admin.zakat.verifikasiList') }}" class="block px-4 py-2 text-gray-700 hover:bg-green-50">Verifikasi Pembayaran</a>
           </div>
         </div>
 
