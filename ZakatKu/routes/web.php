@@ -66,6 +66,7 @@ route::middleware('auth')->group(function () {
 route::middleware('auth')->group(function () {
     Route::get('/zakat/pilih-metode/{id}', [MetodeZakatController::class, 'pilihMetode'])->name('zakat.pilihMetode');
     Route::post('/zakat/pilih-metode', [MetodeZakatController::class, 'metodeStore'])->name('zakat.simpanMetode');
+    Route::get('/zakat/detail/{noReferensi}', [MetodeZakatController::class, 'detailShow'])->name('zakat.detailShow');
 });
 
 Route::middleware(['auth', 'isMuzakki'])->prefix('admin')->group(function () {

@@ -9,7 +9,7 @@ use App\Models\JenisZakat;
 
 class TripayAPI extends Controller
 {
-    public function tripay(Request $request)
+    public function requestPayment(Request $request)
     {
         // dd($request->transaksiId);
         $apiKey       = env('TRIPAY_API_KEY');
@@ -71,11 +71,46 @@ class TripayAPI extends Controller
             CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
         ]);
 
-        $response = json_decode(curl_exec($curl));
+        $response = curl_exec($curl);
+
+        if (isset($response->success) && $response->success && isset($response->data->reference)) {
+            $transaksi->update([
+                'metodePembayaranId' => $request->metodePembayaranId,
+                'noReferensi' => $response->data->reference,
+                'statusPembayaranId' => 1,
+            ]);
+        }
         $error = curl_error($curl);
 
         curl_close($curl);
 
-        return $response ?: $err;
+        return json_decode($response, true);
+    }
+
+    public function detailPayment(string $noReferensi)
+    {
+        $apiKey = env('TRIPAY_API_KEY');
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_FRESH_CONNECT  => true,
+            CURLOPT_URL            => 'https://tripay.co.id/api-sandbox/transaction/detail?reference=' . $noReferensi,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER         => false,
+            CURLOPT_HTTPHEADER     => ['Authorization: Bearer ' . $apiKey],
+            CURLOPT_FAILONERROR    => false,
+            CURLOPT_IPRESOLVE      => CURL_IPRESOLVE_V4
+        ]);
+
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+        curl_close($curl);
+
+        if ($error) {
+            return ['error' => $error];
+        }
+
+        return json_decode($response, true);
     }
 }

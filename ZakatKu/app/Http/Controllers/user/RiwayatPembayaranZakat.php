@@ -24,11 +24,12 @@ class RiwayatPembayaranZakat extends Controller
     {
         $riwayat = TransaksiZakat::with(['jenis', 'statusPembayaran'])->findOrFail($id);
         $statusId = $riwayat->statusPembayaranId;
-
-        return match ($statusId) {
+        return match ($statusId)
+        {
             4 => redirect()->route('riwayat.bayar', $riwayat->transaksiZakatId),
             2 => redirect()->route('riwayat.selesai', $riwayat->transaksiZakatId),
             3 => redirect()->route('riwayat.menunggu', $riwayat->transaksiZakatId),
+            1 => redirect()->route('zakat.detailShow', $riwayat->noReferensi),
             default => abort(404),
         };
     }

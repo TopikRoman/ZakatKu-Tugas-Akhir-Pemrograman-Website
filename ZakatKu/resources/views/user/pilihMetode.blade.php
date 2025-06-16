@@ -6,7 +6,6 @@
         ['id' => 2, 'nama' => 'Bank BRI', 'gambar' => 'bri.png'],
         ['id' => 3, 'nama' => 'QRIS', 'gambar' => 'qris.png'],
         ['id' => 4, 'nama' => 'Bank BNI', 'gambar' => 'bni.png'],
-        ['id' => 5, 'nama' => 'GOPAY', 'gambar' => 'gopay.png'],
         ['id' => 6, 'nama' => 'SHOPEEPAY', 'gambar' => 'shopeepay.png'],
     ];
 @endphp

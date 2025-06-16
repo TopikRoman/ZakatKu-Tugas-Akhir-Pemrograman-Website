@@ -55,7 +55,7 @@ class TransaksiZakatController extends Controller
             if ($request->action === 'simpan') {
                 return redirect()->route('transaksi-zakat.index')->with('success', 'Transaksi berhasil disimpan.');
             } elseif ($request->action === 'bayar') {
-                return redirect()->route('transaksi-zakat.bayar', $transaksi->transaksiZakatId);
+                return redirect()->route('zakat.pilihMetode', $transaksi->transaksiZakatId);
             }
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Gagal menyimpan transaksi: ' . $e->getMessage());
