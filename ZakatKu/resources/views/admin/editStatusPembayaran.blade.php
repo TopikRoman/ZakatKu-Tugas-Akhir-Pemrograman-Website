@@ -1,20 +1,30 @@
-@extends('layouts.adminLayout') {{-- Ganti sesuai layout adminmu --}}
+@extends('layouts.adminLayout')
 
 @section('content')
 <div class="max-w-4xl mx-auto py-10 px-6">
-    <h1 class="text-2xl font-bold text-emerald-800 mb-6">Verifikasi Pembayaran Zakat</h1>
-
+    <h1 class="text-3xl font-bold text-emerald-800 mb-6 border-b pb-2">Verifikasi Pembayaran Zakat</h1>
     @if(session('success'))
-        <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
-            {{ session('success') }}
-        </div>
-    @elseif(session('error'))
-        <div class="mb-4 p-3 bg-red-100 text-red-800 rounded">
-            {{ session('error') }}
-        </div>
+    <script>
+        Swal.fire({
+            title: 'Berhasil!',
+            text: '{{ session("success") }}',
+            icon: 'success',
+            confirmButtonColor: '#10b981'
+        });
+    </script>
     @endif
 
-    <div class="bg-white shadow-md rounded-lg p-6 space-y-6 border border-emerald-200">
+    @if(session('error'))
+    <script>
+        Swal.fire({
+            title: 'Gagal!',
+            text: '{{ session("error") }}',
+            icon: 'error',
+            confirmButtonColor: '#ef4444'
+        });
+    </script>
+    @endif
+    <div class="bg-white shadow-md rounded-lg p-6 space-y-6 border border-emerald-300">
         {{-- Informasi Transaksi --}}
         <div>
             <p class="text-sm text-gray-600 font-semibold">Nama Pengguna:</p>
@@ -44,7 +54,7 @@
         </div>
 
         {{-- Form Update Status --}}
-        <form action="{{ route('admin.zakat.updateStatus', $transaksi->transaksiZakatId) }}" method="POST" class="space-y-4">
+        <form id="updateForm" action="{{ route('admin.zakat.updateStatus', $transaksi->transaksiZakatId) }}" method="POST" class="space-y-4">
             @csrf
             @method('PUT')
 
@@ -64,5 +74,9 @@
             </button>
         </form>
     </div>
+
+
 </div>
+
+
 @endsection

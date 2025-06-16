@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/zakat/edit-status/{id}', [PembayaranZakatController::class, 'editStatus'])->name('admin.zakat.editStatus');
     Route::put('/admin/zakat/update-status/{id}', [PembayaranZakatController::class, 'updateStatus'])->name('admin.zakat.updateStatus');
     Route::get('/admin/zakat/menunggu-verifikasi', [PembayaranZakatController::class, 'listMenungguVerifikasi'])->name('admin.zakat.verifikasiList');
-
+    Route::get('/admin/zakat/tahun/{tahun}/export-pdf', [PembayaranZakatController::class, 'exportPdf'])->name('admin.zakat.exportPdf');
 
 
 });

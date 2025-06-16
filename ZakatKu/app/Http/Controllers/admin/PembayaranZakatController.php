@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\PembayaranZakat;
 use App\Models\TransaksiZakat;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class PembayaranZakatController extends Controller
 {
@@ -79,6 +81,35 @@ public function updateStatus(Request $request, $id)
 
     return redirect()->route('admin.zakat.editStatus', $id)->with('success', 'Status pembayaran berhasil diperbarui.');
 }
+
+public function exportPdf($tahun)
+{
+    // Ambil ID dari tabel pembayaran_zakat berdasarkan tahun
+    $pembayaranZakat = PembayaranZakat::where('tahun', $tahun)->first();
+
+    if (!$pembayaranZakat) {
+        return redirect()->back()->with('error', 'Data pembayaran untuk tahun tersebut tidak ditemukan.');
+    }
+
+    // Ambil semua transaksi berdasarkan pembayaranZakatId dan relasi lainnya
+    $transaksis = TransaksiZakat::with(['user', 'jenis', 'statusPembayaran', 'bentuk'])
+        ->where('pembayaranZakatId', $pembayaranZakat->pembayaranZakatId)
+        ->get();
+
+    if ($transaksis->isEmpty()) {
+        return redirect()->back()->with('error', 'Tidak ada transaksi untuk tahun tersebut.');
+    }
+
+    // Kirim ke view PDF
+    $pdf = Pdf::loadView('admin.templatePDF.template', [
+        'transaksis' => $transaksis,
+        'tahun' => $tahun
+    ])->setPaper('A4', 'portrait');
+
+    return $pdf->download("transaksi-zakat-$tahun.pdf");
+}
+
+
 
 
 }
