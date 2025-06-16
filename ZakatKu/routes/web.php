@@ -11,6 +11,7 @@ use App\Http\Controllers\MetodeZakatController;
 use App\Http\Controllers\user\TripayAPI;
 use App\Http\Controllers\admin\PembagianZakatController;
 use App\Http\Controllers\admin\AdminPenyaluranZakatController;
+use App\Http\Controllers\user\dashboardUser;
 
 
 /*
@@ -39,9 +40,13 @@ Route::get('/', function () {
     // return app(UserDashboardController::class)->guestIndex();
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [dashboardUser::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
