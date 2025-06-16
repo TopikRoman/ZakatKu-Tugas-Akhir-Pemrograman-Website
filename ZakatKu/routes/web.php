@@ -114,6 +114,10 @@ route::middleware('auth')->group(function () {
     Route::post('/penyaluran/tambah', [AdminPenyaluranZakatController::class, 'store'])->name('penyaluran.store');
     Route::get('/penyaluran/export-pdf/{tahun}', [AdminPenyaluranZakatController::class, 'exportPdf'])->name('admin.penyaluran.exportPdf');
 
+route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::resource('penerima_zakat', App\Http\Controllers\admin\PenerimaZakatController::class);
+});
+
 });
 // Route::middleware(['auth', 'isMuzakki'])->group(function () {
 //     Route::post('/tripay', [TripayAPI::class, 'tripay'])->name('pembayaranZakat.tripay');
