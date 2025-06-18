@@ -9,6 +9,7 @@ class PenerimaZakat extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $table = 'penerima_zakat';
     protected $primaryKey = 'penerimaId';
     protected $fillable = ['namaKepalaKeluarga', 'alamat', 'noTelepon'];

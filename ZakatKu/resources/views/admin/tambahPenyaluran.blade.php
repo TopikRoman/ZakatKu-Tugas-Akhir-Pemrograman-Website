@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout')
 
+@section('title', 'Tambah Data Penyaluran Zakat')
+
 @section('content')
 <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded shadow">
     <h2 class="text-2xl font-bold text-green-800 mb-6">Tambah Data Penyaluran Zakat</h2>

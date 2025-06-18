@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout')
 
+@section('title', 'Data Transaksi Menunggu Verifikasi')
+
 @section('content')
 <div class="container mx-auto mt-10">
     <div class="flex justify-between items-center mb-6">

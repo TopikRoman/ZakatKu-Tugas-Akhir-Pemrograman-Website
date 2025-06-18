@@ -1,5 +1,7 @@
 @extends('layouts.userLayout')
 
+@section('title', 'Detail Pembayaran Zakat')
+
 @section('content')
 <div class="max-w-5xl mx-auto py-10 px-4 sm:px-6 text-[15px]">
     {{-- Header --}}

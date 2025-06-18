@@ -1,6 +1,6 @@
 @extends('layouts.userLayout')
 
-@section('title', 'Beranda')
+@section('title', 'Dashboard')
 
 @section('content')
 <div class="bg-gradient-to-r from-green-100 via-green-200 to-yellow-100">

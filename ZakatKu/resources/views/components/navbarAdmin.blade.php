@@ -3,7 +3,7 @@
     <div class="flex justify-between h-16 items-center">
       <!-- Logo -->
       <div class="flex items-center space-x-2 text-green-700 font-bold text-2xl">
-        <img src="{{ asset('storage/images/logo-zakat.png') }}" alt="Logo" class="h-8">
+        <img src="{{ asset('/images/logo-zakat.png') }}" alt="Logo" class="h-8">
         <span>Zakatku Admin</span>
       </div>
 

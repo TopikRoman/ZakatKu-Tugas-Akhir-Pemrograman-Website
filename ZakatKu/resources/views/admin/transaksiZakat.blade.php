@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout')
 
+@section('title', 'Data Pembayaran Zakat')
+
 @section('content')
 <div class="container mx-auto mt-10">
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">

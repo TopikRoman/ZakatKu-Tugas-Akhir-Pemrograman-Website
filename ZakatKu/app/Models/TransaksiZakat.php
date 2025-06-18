@@ -19,7 +19,7 @@ class TransaksiZakat extends Model
     protected $fillable = [
         'userId', 'pembayaranZakatId', 'jenisId', 'bentukId',
         'jumlah', 'tanggalTransaksi', 'statusPembayaranId', 'metodePembayaranId', 'image',
-        'atasNama', 'noReferensi' // tambahkan ini
+        'atasNama', 'noReferensi', 'image' // tambahkan ini
     ];
 
     public function user()

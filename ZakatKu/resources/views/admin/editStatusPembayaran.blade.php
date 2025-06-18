@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout')
 
+@section('title', 'Edit Status Pembayaran')
+
 @section('content')
 <div class="max-w-4xl mx-auto py-10 px-6">
     <h1 class="text-3xl font-bold text-emerald-800 mb-6 border-b pb-2">Verifikasi Pembayaran Zakat</h1>

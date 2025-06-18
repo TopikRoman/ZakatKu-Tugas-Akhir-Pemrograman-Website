@@ -23,7 +23,7 @@
         <input type="hidden" name="metodePembayaranId" value="{{ $item['id'] }}">
 
         <div class="w-32 h-32 mb-5 flex items-center justify-center bg-green-50 rounded-xl shadow-inner">
-            <img src="{{ asset('storage/images/' . $item['gambar']) }}"
+            <img src="{{ asset('images/' . $item['gambar']) }}"
             alt="{{ $item['nama'] }}"
             class="object-contain w-full h-full p-2">
         </div>

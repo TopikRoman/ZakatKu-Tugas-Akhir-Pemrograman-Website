@@ -18,7 +18,9 @@ class dashboardUser extends Controller
             ->whereHas('statusPembayaran', fn($q) => $q->where('statusPembayaranId', 2))
             ->whereHas('pembayaranZakat', fn($q) => $q->where('tahun', $tahunSekarang))
             ->where('statusPembayaranId', 2)
+            ->orderBy('tanggalTransaksi', 'desc') // <-- urutkan dari yang terbaru
             ->get();
+
 
         return view('dashboard', compact('transaksis'));
     }

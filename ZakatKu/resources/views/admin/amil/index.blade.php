@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout')
 
+@section('title', 'Data Amil')
+
 @section('content')
 <div class="container mx-auto px-6 py-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Data Amil</h2>

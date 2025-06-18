@@ -1,5 +1,7 @@
 @extends('layouts.loginLayout')
 
+@section('title', 'Login')
+
 @section('content')
 <div class="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-green-100 via-green-200 to-yellow-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-lg">

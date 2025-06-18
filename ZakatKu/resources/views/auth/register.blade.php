@@ -12,7 +12,7 @@
 
                 <!-- Logo -->
                 <div class="text-center mb-6">
-                    <img src="{{ asset('storage/images/logo-zakat.png') }}" alt="Logo Zakat" class="h-20 mx-auto">
+                    <img src="{{ asset('images\logo-zakat.png') }}" alt="Logo Zakat" class="h-20 mx-auto">
                     <h2 class="mt-4 text-2xl font-bold text-green-700">Daftar Akun Zakatku</h2>
                 </div>
 
@@ -87,7 +87,7 @@
 
         <!-- Ilustrasi -->
         <div class="hidden md:block md:w-1/2 bg-cover bg-center rounded-r-lg"
-             style="background-image: url('{{ asset('storage/images/bg-login.jpg') }}'); min-height: 400px;">
+             style="background-image: url('{{ asset('/images/bg-login.jpg') }}'); min-height: 400px;">
         </div>
     </div>
 </div>

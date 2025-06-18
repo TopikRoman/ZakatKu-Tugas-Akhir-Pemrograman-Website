@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout')
 
+@section('title', 'Dashboard')
+
 @section('content')
 <div class="container mx-auto px-4 py-12">
     <!-- Baris Atas -->

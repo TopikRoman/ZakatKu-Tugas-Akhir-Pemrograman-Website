@@ -1,5 +1,7 @@
 @extends('layouts.adminLayout') {{-- layout utama dengan navbarAdmin --}}
 
+@section('title', 'Pembayaran Zakat')
+
 @section('content')
 <div class="container mx-auto mt-10">
     <div class="flex justify-between items-center mb-6 flex-wrap gap-2">

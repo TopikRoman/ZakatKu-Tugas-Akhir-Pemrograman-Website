@@ -1,5 +1,7 @@
 @extends('layouts.userLayout')
 
+@section('title', 'Pembayaran Zakat - Selesai')
+
 @section('content')
 <div class="max-w-2xl mx-auto mt-12 bg-white shadow-lg rounded-xl p-8 border border-green-300">
     <h2 class="text-2xl font-bold text-green-800 mb-6 border-b border-green-300 pb-2">
