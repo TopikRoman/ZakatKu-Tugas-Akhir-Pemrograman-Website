@@ -19,10 +19,6 @@
                     class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-green-700 hover:bg-green-800 rounded-lg shadow transition">
                     <i class="fas fa-hand-holding-heart mr-2"></i> Bayar Zakat Sekarang
                 </a>
-                <a href="#"
-                    class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-green-700 border border-green-600 rounded-lg hover:bg-green-100 transition">
-                    <i class="fas fa-info-circle mr-2"></i> Tentang Zakatku
-                </a>
             </div>
         </div>
         <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
@@ -120,19 +116,20 @@
         <td class="px-6 py-4">{{ $trx->jenis->namaJenisZakat ?? '-' }}</td>
         <td class="px-6 py-4">{{ $trx->bentuk->namaBentukZakat ?? '-' }}</td>
         <td class="px-6 py-4">
-          {{ $trx->jumlah }}
-          @php
-              $bentuk = strtolower($trx->bentuk->namaBentukZakat ?? '');
-          @endphp
-          @if($bentuk === 'uang')
-            Rp
-          @elseif($bentuk === 'beras')
-            kg
-          @elseif($bentuk === 'emas')
-            gr
-          @else
-            -
-          @endif
+            @php
+                $bentuk = strtolower($trx->bentuk->namaBentukZakat ?? '');
+                $jumlah = $trx->jumlah;
+            @endphp
+
+            @if($bentuk === 'uang')
+                Rp {{ number_format($jumlah, 0, ',', '.') }}
+            @elseif($bentuk === 'beras')
+                {{ $jumlah }} kg
+            @elseif($bentuk === 'emas')
+                {{ $jumlah }} gr
+            @else
+                {{ $jumlah }} -
+            @endif
         </td>
         <td class="px-6 py-4">
           {{ \Carbon\Carbon::parse($trx->tanggalTransaksi)->format('d M Y') }}

@@ -119,8 +119,7 @@
                 <div><span class="font-semibold text-gray-800">Bentuk Zakat:</span><br>${data.bentuk?.namaBentukZakat ?? '-'}</div>
                 <div><span class="font-semibold text-gray-800">Jumlah:</span><br>${satuan}</div>
                 <div><span class="font-semibold text-gray-800">Tanggal:</span><br>${formattedDate}</div>
-                <div><span class="font-semibold text-gray-800">Atas Nama:</span><br>${data.atasNama}</div>
-                <div><span class="font-semibold text-gray-800">Status Pembayaran:</span><br>${data.statusPembayaran?.namaStatus ?? '-'}</div>
+                <div><span class="font-semibold text-gray-800">Atas Nama:</span><br>${data.atasNama}</div>-
             </div>
             ${data.image
                 ? `<div class="mt-6 border-t pt-4">

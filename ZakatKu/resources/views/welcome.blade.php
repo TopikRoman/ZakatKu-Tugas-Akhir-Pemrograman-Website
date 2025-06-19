@@ -18,10 +18,6 @@
                     class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-green-700 hover:bg-green-800 rounded-lg shadow transition">
                     <i class="fas fa-hand-holding-heart mr-2"></i> Bayar Zakat Sekarang
                 </a>
-                <a href="#"
-                    class="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-green-700 border border-green-600 rounded-lg hover:bg-green-100 transition">
-                    <i class="fas fa-info-circle mr-2"></i> Tentang Zakatku
-                </a>
             </div>
         </div>
         <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
